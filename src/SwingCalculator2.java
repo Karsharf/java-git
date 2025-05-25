@@ -84,33 +84,32 @@ public class SwingCalculator2 extends JFrame {
 
         for (int i = 0; i < operators.size(); i++) {
             String op = operators.get(i);
-            if (op.equals("√") || op.equals("²") || op.equals("!")) {
-                if (i >= numbers.size()) {
-                    throw new IllegalArgumentException("Недостаточно чисел для оператора " + op);
-                }
-
-                double num = numbers.get(i);
+            if (op.equals("*") || op.equals("/") || op.equals("^")) {
+                double left = numbers.get(i);
+                double right = numbers.get(i + 1);
                 double res;
+
                 switch (op) {
-                    case "√":
-                        res = Math.sqrt(num);
+                    case "*":
+                        res = left * right;
                         break;
-                    case "²":
-                        res = num * num;
+                    case "/":
+                        if (right == 0) throw new ArithmeticException("Деление на ноль");
+                        res = left / right;
                         break;
-                    case "!":
-                        res = factorial((int) num);
+                    case "^":
+                        res = Math.pow(left, right);
                         break;
                     default:
-                        throw new IllegalArgumentException("Неизвестный унарный оператор: " + op);
+                        continue;
                 }
 
                 numbers.set(i, res);
+                numbers.remove(i + 1);
                 operators.remove(i);
                 i--;
             }
         }
-
 
         double result = numbers.get(0);
         for (int i = 0; i < operators.size(); i++) {
@@ -123,16 +122,6 @@ public class SwingCalculator2 extends JFrame {
                     break;
                 case "-":
                     result -= nextNum;
-                    break;
-                case "*":
-                    result *= nextNum;
-                    break;
-                case "/":
-                    if (nextNum == 0) throw new ArithmeticException("Деление на ноль");
-                    result /= nextNum;
-                    break;
-                case "^":
-                    result = Math.pow(result, nextNum);
                     break;
                 default:
                     throw new IllegalArgumentException("Неизвестный оператор: " + operator);
