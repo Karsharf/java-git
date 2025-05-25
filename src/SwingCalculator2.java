@@ -68,7 +68,7 @@ public class SwingCalculator2 extends JFrame {
     }
 
     private double evaluateExpression(String expression) {
-        String[] tokens = expression.split(" ");
+        String[] tokens = expression.split("(?<=[-+*/^√!()])|(?=[-+*/^√!()])");
         ArrayList<Double> numbers = new ArrayList<>();
         ArrayList<String> operators = new ArrayList<>();
 
@@ -80,10 +80,6 @@ public class SwingCalculator2 extends JFrame {
             } catch (NumberFormatException e) {
                 operators.add(token);
             }
-        }
-
-        if (operators.size() != numbers.size() - 1 && !operators.isEmpty()) {
-            throw new IllegalArgumentException("Неверное количество операторов");
         }
 
         for (int i = 0; i < operators.size(); i++) {
