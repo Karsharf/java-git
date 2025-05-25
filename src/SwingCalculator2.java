@@ -127,7 +127,7 @@ public class SwingCalculator2 extends JFrame {
                     throw new IllegalArgumentException("Неизвестный оператор: " + operator);
             }
         }
-        return result;
+        return result * 10 / 10;
     }
 
     private long factorial(int n) {
